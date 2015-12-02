@@ -1,0 +1,83 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="diamond-chrome">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 30px;
+        background-color: #303F9F;
+        -webkit-app-region: drag;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+      }
+
+      #system-buttons {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        margin-left: 5px;
+      }
+
+      .button {
+        margin: 8px 3px;
+        width: 13px;
+        height: 13px;
+        border-radius: 100%;
+      }
+
+      .close {
+        background-color: #F44336;
+      }
+      .minimize {
+        background-color: #FFC107;
+      }
+      .maximize {
+        background-color: #4CAF50;
+      }
+    </style>
+    <div id='system-buttons'>
+      <div class="button close" on-tap='close'></div>
+      <div class="button minimize" on-tap='minimize'></div>
+      <div class="button maximize" on-tap='maximize'></div>
+    </div>
+  </template>
+  <script>
+    (function (Polymer, remote) {
+      'use strict';
+      class DiamondChrome {
+        beforeRegister() {
+          this.is = 'diamond-chrome';
+
+          this.properties = {
+          };
+        }
+
+        close() {
+          var window = remote.getCurrentWindow();
+          window.close();
+        }
+
+        minimize() {
+          var window = remote.getCurrentWindow();
+          window.minimize();
+        }
+
+        maximize() {
+          var window = remote.getCurrentWindow();
+          window.maximize();
+        }
+
+      }
+
+      Polymer(DiamondChrome);
+    })(Polymer, require('remote'));
+  </script>
+</dom-module>
