@@ -1,30 +1,31 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 
 <dom-module id="diamond-chrome">
   <template>
     <style>
       :host {
         display: block;
-        height: 30px;
-        background-color: var(--diamond-chrome-background-color, #303F9F);
         -webkit-app-region: drag;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -ms-flex-direction: row;
-        -webkit-flex-direction: row;
-        flex-direction: row;
-        @apply(--diamond-chrome-mixin);
+        height: 30px;
+        background-color: #303F9F;
+        @apply(--layout-horizontal);
       }
 
-      #system-buttons {
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -ms-flex-direction: row;
-        -webkit-flex-direction: row;
-        flex-direction: row;
+      :host>* {
+        width: 33%;
+      }
+
+      #osx-buttons {
+        @apply(--layout-horizontal);
         margin-left: 5px;
+      }
+
+      #windows-buttons {
+        @apply(--layout-horizontal);
+        margin-right: 5px;
+        float: right;
+        display: none !important;
       }
 
       .button {
@@ -43,12 +44,29 @@
       .maximize {
         background-color: #4CAF50;
       }
+
+      .title {
+        color: var(--diamond-chrome-title-color, white);
+        text-align: center;
+        position: relative;
+        top: 8px;
+        font-size: 13px;
+      }
     </style>
-    <div id='system-buttons'>
+    <div id='osx-buttons'>
       <div class="button close" on-tap='close'></div>
       <div class="button minimize" on-tap='minimize'></div>
       <div class="button maximize" on-tap='maximize'></div>
     </div>
+    <div class='title'>
+      {{ title }}
+    </div>
+    <div id='windows-buttons'>
+      <div class="button maximize" on-tap='maximize'></div>
+      <div class="button minimize" on-tap='minimize'></div>
+      <div class="button close" on-tap='close'></div>
+    </div>
+
   </template>
   <script>
     (function (Polymer, remote) {
@@ -58,6 +76,10 @@
           this.is = 'diamond-chrome';
 
           this.properties = {
+            /** The title of the page */
+            title: {
+              type: String
+            }
           };
         }
 
